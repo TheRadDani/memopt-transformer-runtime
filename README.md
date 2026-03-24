@@ -32,14 +32,6 @@ Memory-efficient KV packing/unpacking
 Quantized tensor operations
 Fused attention with compressed KV cache
 
-System Architecture
-                ┌────────────────────────────┐
-Input → Model → │  MemOpt Runtime Layer      │ → Output
-                │                            │
-                │  • KV Cache Optimizer      │
-                │  • Activation Manager      │
-                │  • Memory Scheduler        │
-                └────────────────────────────┘
 
 Research Contributions
 Dynamic KV cache compression strategies
