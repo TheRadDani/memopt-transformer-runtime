@@ -95,6 +95,6 @@ If you utilize MemOpt in your research, please cite this repository:
   author = {Luis Ddaniel Ferreto Chavarria},
   title = {MemOpt: Dynamic Memory Optimization for Transformer Inference},
   year = {2026},
-  url = {https://github.com/yourusername/memopt-transformer-runtime}
+  url = {https://github.com/TheRadDani/memopt-transformer-runtime}
 }
 ```
