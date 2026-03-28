@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=42", "wheel", "torch>=2.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "memopt"
+version = "0.1.0"
+description = "Dynamic Memory Optimization for Transformer Inference"
+authors = [
+    {name = "Daniel", email = "ldanielfch@gmail.com"}
+]
+dependencies = [
+    "torch>=2.0.0",
+    "numpy",
+    "pytest"
+]
+requires-python = ">=3.8"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort",
+    "pytest",
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
