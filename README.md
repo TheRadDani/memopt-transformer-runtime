@@ -92,7 +92,7 @@ If you utilize MemOpt in your research, please cite this repository:
 
 ```bibtex
 @software{memopt_2026,
-  author = {Your Name},
+  author = {Luis Ddaniel Ferreto Chavarria},
   title = {MemOpt: Dynamic Memory Optimization for Transformer Inference},
   year = {2026},
   url = {https://github.com/yourusername/memopt-transformer-runtime}
