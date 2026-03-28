@@ -66,11 +66,33 @@ Ensure the NVIDIA CUDA toolkit is present in your environment, then compile the 
 pip install -e .
 ```
 
-### 2. Empirical Validation
-Track exact peak VRAM differentials and tokens/second throughput:
+### 2. Empirical Validation & Benchmarking Suite
+
+MemOpt includes a comprehensive benchmarking suite designed to measure end-to-end system metrics, absolute task accuracy, and the isolated impact of optimizations.
+
+#### A. Accuracy & Perplexity Metrics
+Measure mathematical equivalence and perplexity degradation on standard text datasets (WikiText-2, C4) at varying context lengths:
 ```bash
-python scripts/bench_memory.py --model llama-7b --seq-len 8192
-python scripts/bench_latency.py
+python scripts/bench_accuracy.py --evaluate-dataset wikitext-2 --context-lengths 1024,4096,8192
+```
+
+#### B. End-to-End Latency & Memory Profiling
+Profile Time-To-First-Token (TTFT), Time-Per-Output-Token (TPOT), and granular real-time VRAM allocation metrics:
+```bash
+python scripts/bench_latency_v2.py --batch-size 1,4,16 --seq-len 8192
+python scripts/bench_memory_v2.py --model llama-7b --seq-len 8192
+```
+
+#### C. Ablation Studies
+Isolate and prove the impact of individual MemOpt components by running a grid-search of configurations (Full MemOpt, No Pruning, No Quantization, No Chunking):
+```bash
+python scripts/run_ablations.py --seq-len 8192 --output results/ablation_data.json
+```
+
+#### D. Generating Research Visualizations
+Generate MLSys/NeurIPS quality Pareto curves, memory breakdown bar charts, and attention sparsity heatmaps from the benchmark outputs:
+```bash
+python scripts/plot_results.py --input results/ablation_data.json --output-dir figures/
 ```
 
 ### 3. Unit Testing
