@@ -55,9 +55,6 @@ memopt-transformer-runtime/
 │       ├── attention.cu      # Custom FlashAttention w/ token dropping
 │       └── quantization.cu   # INT4 fused de/quantization
 ├── tests/                    # Unit testing suite (torch.allclose validations)
-├── scripts/                  # Profiling scripts (latency vs VRAM mapping)
-├── CLAUDE.md                 # Project coding standards and rules
-├── project_claude.md         # Multi-agent orchestrator assignments
 └── setup.py                  # Torch CUDAExtension build configuration
 ```
 
