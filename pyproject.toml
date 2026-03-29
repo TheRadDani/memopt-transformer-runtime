@@ -1,5 +1,8 @@
 [build-system]
-requires = ["setuptools>=42", "wheel", "torch>=2.0.0"]
+# torch is NOT listed here — importing it during pip's build-requirements
+# phase triggers CUDA device queries that SIGSEGV in WSL2 environments.
+# torch is a runtime dependency only (see [project] dependencies below).
+requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,14 +10,14 @@ name = "memopt"
 version = "0.1.0"
 description = "Dynamic Memory Optimization for Transformer Inference"
 authors = [
-    {name = "Daniel", email = "ldanielfch@gmail.com"}
+    {name = "Daniel Ferreto", email = "ldanielfch@gmail.com"}
 ]
+requires-python = ">=3.12"
 dependencies = [
     "torch>=2.0.0",
     "numpy",
-    "pytest"
+    "pytest",
 ]
-requires-python = ">=3.8"
 
 [project.optional-dependencies]
 dev = [
@@ -25,4 +28,4 @@ dev = [
 
 [tool.black]
 line-length = 100
-target-version = ['py38']
+target-version = ["py312"]
