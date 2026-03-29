@@ -190,13 +190,27 @@ Output: `results/ablation_data.json` + per-script CSVs in `results/`.
 
 ### E. Research Figures
 
-Generates NeurIPS/MLSys-quality figures from benchmark outputs:
+Generates four NeurIPS/MLSys-quality PDF figures from benchmark outputs:
+
+| Figure | File | Description |
+|---|---|---|
+| Pareto Curve | `figures/pareto_curve.pdf` | Peak VRAM vs. Perplexity with Ada-KV sweep points |
+| Memory Breakdown | `figures/memory_breakdown.pdf` | Stacked bars: Weights / KV Cache / Activations per seq length |
+| Ablation Impact | `figures/ablation_impact.pdf` | 3-panel grouped bars: VRAM, PPL, TPOT per ablation config |
+| Attention Sparsity | `figures/attention_sparsity.pdf` | Ada-KV causal attention heatmap (retained vs dropped tokens) |
 
 ```bash
-# Generate all figures (Pareto, memory breakdown, ablation, attention heatmap)
+# Generate all figures using the full results/ directory (recommended)
+python scripts/plot_results.py \
+    --accuracy-json scripts/bench_accuracy.json \
+    --ablation-json results/ablation_data.json \
+    --results-dir results/ \
+    --output-dir figures/
+
+# Minimal invocation (uses defaults for all paths)
 python scripts/plot_results.py --output-dir figures/
 
-# Point to specific result files
+# Point to a specific single memory CSV instead of a directory
 python scripts/plot_results.py \
     --accuracy-json scripts/bench_accuracy.json \
     --memory-csv scripts/bench_memory_v2.csv \
@@ -207,11 +221,21 @@ python scripts/plot_results.py \
 python scripts/plot_results.py --no-pareto --no-heatmap --output-dir figures/
 ```
 
-| Flag | Skips |
+| Argument | Default | Description |
+|---|---|---|
+| `--accuracy-json` | `scripts/bench_accuracy.json` | Perplexity results JSON |
+| `--memory-csv` | `scripts/bench_memory_v2.csv` | Single memory breakdown CSV |
+| `--ablation-json` | `results/ablation_data.json` | Ablation study JSON |
+| `--results-dir` | *(none)* | Directory of `memory_*.csv` files merged into the memory breakdown (rows from `--memory-csv` take precedence on conflict) |
+| `--output-dir` | `figures/` | Output directory for PDFs |
+| `--dpi` | `300` | Raster DPI embedded in PDF |
+| `--dataset` | `wikitext2` | Dataset to use for Pareto PPL values |
+
+| Skip Flag | Omits |
 |---|---|
 | `--no-pareto` | PPL vs VRAM Pareto curve |
-| `--no-memory` | VRAM breakdown bar chart |
-| `--no-ablation` | Ablation impact chart |
+| `--no-memory` | VRAM breakdown stacked bar chart |
+| `--no-ablation` | Ablation impact 3-panel chart |
 | `--no-heatmap` | Attention sparsity heatmap |
 
 Output: PDF figures in `figures/`.
@@ -236,14 +260,14 @@ python scripts/bench_latency_v2.py --batch-size 1,4,16 --seq-len 8192
 # 5. Memory benchmark
 python scripts/bench_memory_v2.py --model llama-7b --seq-len 8192
 
-# 6. Full ablation study
+# 6. Full ablation study (writes results/ per-config CSVs + ablation_data.json)
 python scripts/run_ablations.py --seq-len 8192 --output results/ablation_data.json
 
-# 7. Generate figures
+# 7. Generate NeurIPS/MLSys figures
 python scripts/plot_results.py \
     --accuracy-json scripts/bench_accuracy.json \
-    --memory-csv scripts/bench_memory_v2.csv \
     --ablation-json results/ablation_data.json \
+    --results-dir results/ \
     --output-dir figures/
 ```
 
