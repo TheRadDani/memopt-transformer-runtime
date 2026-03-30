@@ -41,3 +41,6 @@
 *.dwo
 .worktrees/
 __pycache__/
+
+# Distribution / packaging
+memopt.egg-info/
